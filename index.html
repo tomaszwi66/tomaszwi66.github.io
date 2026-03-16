@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tomasz Wietrzykowski - AI & Software Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --surface: #111318;
+      --surface2: #181c23;
+      --border: #1f2430;
+      --accent: #00e5a0;
+      --accent2: #4f8cff;
+      --accent3: #ff6b6b;
+      --accent4: #ffd166;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --mono: 'Space Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .35;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: relative;
+      padding: 80px 24px 70px;
+      max-width: 1100px;
+      margin: 0 auto;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0 48px;
+    }
+    .header-left {
+      grid-column: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 2;
+    }
+    .header-photo {
+      grid-column: 2;
+      align-self: center;
+      width: 400px;
+      aspect-ratio: 1/1;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(0,229,160,0.22);
+      box-shadow: 0 0 60px rgba(0,229,160,0.09), 0 0 0 1px rgba(255,255,255,0.04);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .header-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 700px) {
+      header { grid-template-columns: 1fr; }
+      .header-photo { grid-column: 1; width: 100%; max-width: 300px; margin: 32px auto 0; }
+    }
+
+    .header-grid-bg {
+      position: absolute; inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: .4;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: var(--mono);
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.05;
+      position: relative;
+    }
+
+    h1 span.accent { color: var(--accent); }
+    h1 span.dim { color: var(--muted); }
+
+    .subtitle {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+      font-weight: 300;
+      position: relative;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .stat {
+      font-family: var(--mono);
+    }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10, 11, 14, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 12px 0;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: 1px solid transparent;
+      padding: 6px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(0,229,160,.06);
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 120px;
+    }
+
+    /* ─── SECTION ─── */
+    .section { margin-bottom: 80px; }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .section-meta {}
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-top: 6px;
+      font-weight: 300;
+    }
+
+    /* ─── GRID ─── */
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    .grid.wide {
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,229,160,.08);
+    }
+
+    .card-accent-line {
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .card-accent-line.blue { background: linear-gradient(90deg, var(--accent2), transparent); }
+    .card-accent-line.red  { background: linear-gradient(90deg, var(--accent3), transparent); }
+    .card-accent-line.gold { background: linear-gradient(90deg, var(--accent4), transparent); }
+
+    .card-body {
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .1em;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: .875rem;
+      color: #9ca3af;
+      line-height: 1.65;
+      flex: 1;
+      font-weight: 300;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .08em;
+      padding: 3px 8px;
+      border-radius: 2px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .card-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: 3px;
+      border: 1px solid;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(0,229,160,.06);
+    }
+    .btn-primary:hover {
+      background: rgba(0,229,160,.15);
+    }
+    .btn-secondary {
+      color: var(--muted);
+      border-color: var(--border);
+      background: transparent;
+    }
+    .btn-secondary:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+    .btn-blue {
+      color: var(--accent2);
+      border-color: var(--accent2);
+      background: rgba(79,140,255,.06);
+    }
+    .btn-blue:hover { background: rgba(79,140,255,.15); }
+
+    /* ─── FEATURED CARD ─── */
+    .card.featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      gap: 0;
+    }
+    .card.featured .card-accent-line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .card.featured .card-body {
+      flex: 1;
+    }
+    .card.featured .featured-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+
+    /* ─── METRICS ROW ─── */
+    .metrics {
+      display: flex;
+      gap: 20px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .metric {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .metric strong {
+      color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .05em;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .section { animation: fadeUp .6s ease both; }
+    .section:nth-child(1) { animation-delay: .1s; }
+    .section:nth-child(2) { animation-delay: .2s; }
+    .section:nth-child(3) { animation-delay: .3s; }
+    .section:nth-child(4) { animation-delay: .4s; }
+    .section:nth-child(5) { animation-delay: .5s; }
+
+    @media (max-width: 640px) {
+      .card.featured { flex-direction: column; }
+      .grid.wide { grid-template-columns: 1fr; }
+    }
+
+    /* ===== GALLERY ===== */
+    .card-gallery {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+    .card-gallery img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+    .card-gallery img.active {
+      opacity: 1;
+    }
+    .gallery-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.55);
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      width: 32px;
+      height: 48px;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+    }
+    .card-gallery:hover .gallery-btn {
+      opacity: 1;
+    }
+    .gallery-btn.prev { left: 6px; }
+    .gallery-btn.next { right: 6px; }
+    .gallery-dots {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 10;
+    }
+    .gallery-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .gallery-dot.active {
+      background: rgba(255,255,255,0.9);
+    }
+
+    /* ===== SOCIAL FOOTER ===== */
+    .social-footer {
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.4);
+      padding: 28px 24px;
+    }
+    .social-footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-family: var(--mono);
+      transition: border-color .2s, color .2s;
+      white-space: nowrap;
+    }
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--fg);
+    }
+    .social-link img {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .social-link svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+    .social-sep {
+      color: var(--border);
+      font-size: 18px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="header-grid-bg" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></div>
+  <div class="header-left">
+    <div class="badge">// Projects &amp; Experiments · AI · Simulation · Tools</div>
+    <h1>
+      [Tomasz Wietrzykowski]<br/>
+      <span class="dim">-</span> <span class="accent">Builder</span><span class="dim">.</span>
+    </h1>
+    <p class="subtitle">
+      I build AI systems, local-first tools, simulations, and interactive experiments -
+      from production-ready agents to generative art and cognitive models.
+    </p>
+    <div class="header-stats">
+    <div class="stat">
+      <div class="stat-num">34+</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10+</div>
+      <div class="stat-label">GitHub repos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Open source</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Cloud / subscription</div>
+    </div>
+    </div>
+  </div><!-- /header-left -->
+  <div class="header-photo">
+    <img src="images/profilowe.jpg" alt="Profile photo">
+  </div>
+</header>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="scrollTo('#ai-agents')">AI Agents</button>
+    <button class="nav-btn" onclick="scrollTo('#ml-research')">ML Research</button>
+    <button class="nav-btn" onclick="scrollTo('#spatial-ar')">Spatial & AR</button>
+    <button class="nav-btn" onclick="scrollTo('#simulations')">Simulations</button>
+    <button class="nav-btn" onclick="scrollTo('#games-interactive')">Games & Interactive</button>
+    <button class="nav-btn" onclick="scrollTo('#education')">Education</button>
+    <button class="nav-btn" onclick="scrollTo('#misc')">Other</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+
+  <!-- ══ 1. AI AGENTS & LOCAL TOOLS ══ -->
+  <section class="section" id="ai-agents">
+    <div class="section-header">
+      <div class="section-icon">🤖</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 01</div>
+        <h2>AI Agents & Local-First Tools</h2>
+        <p class="section-desc">Production-grade autonomous agents and office tools - fully local, no cloud, no subscription.</p>
+      </div>
+    </div>
+    <div class="grid wide">
+
+      <!-- ATLAS -->
+      <div class="card featured">
+        <div class="card-accent-line"></div>
+        <div class="card-body">
+          <div class="featured-badge">⭐ Flagship Project</div>
+          <div class="card-num">#04</div>
+          <h3>ATLAS - Fully Autonomous Desktop AI Agent</h3>
+          <p>
+            A fully autonomous AI agent running entirely on your local machine via Ollama. No cloud, no subscriptions, no data leaving your PC. ATLAS plans tasks in plain language, breaks them into steps, picks the right tool for each step, executes everything, verifies the result, and self-heals on errors with automatic retries. Runs from a single Python file, supports Qwen, LLaMA, Mistral, Gemma and any Ollama model.
+          </p>
+          <div class="metrics">
+            <span class="metric">Files &amp; Word docs <strong>✓</strong></span>
+            <span class="metric">Excel + Charts <strong>✓</strong></span>
+            <span class="metric">Web scraping <strong>✓</strong></span>
+            <span class="metric">CMD / PowerShell <strong>✓</strong></span>
+            <span class="metric">Mouse &amp; Keyboard <strong>✓</strong></span>
+            <span class="metric">Screenshots <strong>✓</strong></span>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Ollama</span>
+            <span class="tag">LLM</span>
+            <span class="tag">Automation</span>
+            <span class="tag">MIT License</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/ollama-desktop-agent" target="_blank">⭐ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Office AI Studio -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image4.jpeg" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#02</div>
+          <h3>Office AI Studio</h3>
+          <p>
+            Open-source, 100% local AI automation suite for office work. Smart Drop Zone for drag-and-drop actions, Pipeline Builder for multi-step workflows, Python script automation, Auto Tasks triggered by file rules, CSV/data tools, and Meeting Notes → tasks + email drafts. Works with Llama, Mistral, Bielik and any Ollama model.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Ollama</span>
+            <span class="tag">Desktop GUI</span>
+            <span class="tag">Office Automation</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/office-ai-studio" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GroqAgent -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+        <div class="card-body">
+          <div class="card-num">#33</div>
+          <h3>GroqAgent - Natural Language Computer Control</h3>
+          <p>
+            Control your Windows 11 computer with natural language. Combines Groq's LLMs with a full tool suite: browser automation (click, fill forms, JS execution), file operations, Excel creation with charts, CMD/PowerShell, and web fetching. Features dual-model routing - auto-selects between fast (Llama 3.1-8b) and smart (Llama 3.3-70b) based on task complexity.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Groq API</span>
+            <span class="tag">Windows 11</span>
+            <span class="tag">Browser Automation</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/groqagent" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agentflow -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+        <div class="card-body">
+          <div class="card-num">#34</div>
+          <h3>Agentflow - Autonomous AI Market Research Agency</h3>
+          <p>
+            A fully functional multi-agent system built with CrewAI and Google Gemini 2.5 Flash. Agents have live web access via DuckDuckGo search and collaborate in a hierarchical process: Manager → Internet Researcher → Market Analyst → Report Director. Outputs clean, professional Markdown business reports. 100% free to run using Gemini's free tier.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">CrewAI</span>
+            <span class="tag">Gemini 2.5</span>
+            <span class="tag">Multi-agent</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/agentflow" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 2. ML & AI RESEARCH ══ -->
+  <section class="section" id="ml-research">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 02</div>
+        <h2>Machine Learning & AI Research</h2>
+        <p class="section-desc">World models, spiking neural networks, cognitive systems, and AI architecture experiments.</p>
+      </div>
+    </div>
+    <div class="grid">
+
+      <!-- Mini Dreamer -->
+      <div class="card featured">
+        <div class="card-accent-line red"></div>
+    <div class="card-gallery">
+      <img src="images/image2.jpeg" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="featured-badge">⭐ Research Project</div>
+          <div class="card-num">#01</div>
+          <h3>Mini Dreamer - Interactive World Model with Real-Time Online Learning</h3>
+          <p>
+            A minimal but complete world model system that learns to predict future observations while you explore a procedurally generated 3D environment in real time. Every step becomes training data fed into a replay buffer; a mini-batch gradient update fires every step. Features CNN Encoder → 64-dim VAE latent, GRU-based RSSM (256-dim) for temporal dynamics, and a "Pure Dream Mode" where the model generates predictions from its own previous outputs - letting you watch errors compound and representation quality degrade.
+          </p>
+          <div class="metrics">
+            <span class="metric">MAE <strong>18.8 → 9.9 (↓47%)</strong></span>
+            <span class="metric">PSNR <strong>+3.9 dB over 1020 steps</strong></span>
+            <span class="metric">SSIM <strong>0.79 → 0.82</strong></span>
+            <span class="metric">Runs on <strong>CPU realtime</strong></span>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">World Models</span>
+            <span class="tag">Online Learning</span>
+            <span class="tag">RSSM</span>
+            <span class="tag">VAE</span>
+            <span class="tag">MIT License</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/mini-dreamer-world-model" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio Brain -->
+      <div class="card">
+        <div class="card-accent-line red"></div>
+    <div class="card-gallery">
+      <img src="images/image18.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#06</div>
+          <h3>Bio-Brain - Biologically Faithful Artificial Brain</h3>
+          <p>
+            A spiking neural network with real Izhikevich neuron dynamics running a virtual creature that learns to survive. 29 spiking neurons, STDP learning (from Bi &amp; Poo 1998 rat hippocampus research), dopamine/serotonin reward system (three-factor learning rule), and Dale's law enforced (excitatory/inhibitory segregation). No backpropagation - purely local spike timing and neuromodulation. One Python file.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">pygame</span>
+            <span class="tag">numpy</span>
+            <span class="tag">Spiking NN</span>
+            <span class="tag">Neuroscience</span>
+            <span class="tag">STDP</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/bio-brain" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- H-Map -->
+      <div class="card">
+        <div class="card-accent-line red"></div>
+    <div class="card-gallery">
+      <img src="images/image24.jpeg" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#08</div>
+          <h3>H-Map - Cognitive Memory System Inspired by the Hippocampus</h3>
+          <p>
+            An experimental cognitive app that builds a dynamic memory map from live camera input using 400-dim vector embeddings (digital engrams). Visually similar frames cluster into artificial Place Cells, forming a navigable cognitive map. Includes a predictive layer that anticipates upcoming visual states and a reinforcement layer (reward/punishment) that shapes system behavior. Real-time, self-organizing - no neural network classifier.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Vector Embeddings</span>
+            <span class="tag">Place Cells</span>
+            <span class="tag">Cognitive Science</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/hmap" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mouse Nav Sim -->
+      <div class="card">
+        <div class="card-accent-line red"></div>
+    <div class="card-gallery">
+      <img src="images/image60.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#20</div>
+          <h3>Biologically Inspired Mouse Navigation Simulator</h3>
+          <p>
+            Biologically inspired navigation agent using place cells, grid cells, head-direction cells, and SLAM-like memory. The agent explores an arena, avoids obstacles, builds a spatial map, and finds food autonomously - all driven by the same cell types found in mammalian hippocampus.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">SLAM</span>
+            <span class="tag">Place Cells</span>
+            <span class="tag">Grid Cells</span>
+            <span class="tag">Neuroscience</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Consensus AI -->
+      <div class="card">
+        <div class="card-accent-line red"></div>
+    <div class="card-gallery">
+      <img src="images/image31.jpeg" loading="lazy" class="active">
+      <img src="images/image32.jpeg" loading="lazy">
+      <img src="images/image33.jpeg" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#11</div>
+          <h3>Consensus AI - Dual-Agent Deliberative Reasoning</h3>
+          <p>
+            Instead of instant answers, two AI personas start from opposite viewpoints on your problem, debate, challenge each other's arguments, refine positions, and converge toward common ground. Useful for difficult decisions, complex tradeoffs, and exploring multiple perspectives before reaching a conclusion.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Multi-agent</span>
+            <span class="tag">Deliberation</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/consensus-ai" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 3. SPATIAL COMPUTING & AR ══ -->
+  <section class="section" id="spatial-ar">
+    <div class="section-header">
+      <div class="section-icon">📡</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 03</div>
+        <h2>Spatial Computing, AR & Computer Vision</h2>
+        <p class="section-desc">Robot-like perception, AR obstacle detection, 3D mapping, and depth estimation - all from a single camera.</p>
+      </div>
+    </div>
+    <div class="grid">
+
+      <!-- Collision Field AR -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image35.png" loading="lazy" class="active">
+      <img src="images/image36.png" loading="lazy">
+      <img src="images/image37.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#12</div>
+          <h3>Collision Field AR - Real-Time Obstacle Detection</h3>
+          <p>
+            AR app that perceives surroundings in real time using a single monocular camera in a mobile browser. Detects walls, floors, furniture, stairs, and drop-offs; builds a local 3D occupancy grid with an attention mechanism that updates only currently observed regions. Provides visual red-edge warnings, haptic feedback, a live top-down mini-map, and records 3D camera trajectories. No LiDAR, no cloud, no app install.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">WebGL</span>
+            <span class="tag">Computer Vision</span>
+            <span class="tag">SLAM-like</span>
+            <span class="tag">Mobile AR</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/collision-field" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- EcoSound AI -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+        <div class="card-body">
+          <div class="card-num">#03</div>
+          <h3>EcoSound AI - Ecosystem Health Analysis Through Sound</h3>
+          <p>
+            Assess ecosystem condition from a .wav file or live microphone. Computes scientific acoustic indices (ACI, ADI, BIO, NDSI), scores ecosystem health 0–100, generates a dashboard with spectrogram/waveform/charts, optionally identifies bird species via BirdNET (Cornell Lab), and compares multiple recording locations side by side. Pure Python, runs locally.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Bioacoustics</span>
+            <span class="tag">BirdNET</span>
+            <span class="tag">Ecology</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/ecosound-ai" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mix & Mesh / 3D Photo -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image46.png" loading="lazy" class="active">
+      <img src="images/image47.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#16</div>
+          <h3>Mix & Mesh - Single Photo to Interactive 3D Scene</h3>
+          <p>
+            Upload one photo (room, landscape, portrait, object) and the AI instantly generates a depth map, creates semantic segmentation masks (recognizing objects), and fuses them into an interactive 3D scene. Rotate the view, look from different angles, apply effects, or export to 3D format.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Depth Estimation</span>
+            <span class="tag">Semantic Segmentation</span>
+            <span class="tag">3D Visualization</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RedWall 3D Architect -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image48.png" loading="lazy" class="active">
+      <img src="images/image49.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#17</div>
+          <h3>RedWall 3D Architect - Room Photo to 3D Floor Plan</h3>
+          <p>
+            Upload any room photo (even low-quality phone shots) and AI reconstructs the 3D structure, estimates camera position, and recognizes furniture with approximate dimensions. Navigate the scene in 3D, switch between realistic and semantic views. Powered by Gemini 3 Flash. Useful for interior designers and real estate agents.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Gemini Vision</span>
+            <span class="tag">3D Reconstruction</span>
+            <span class="tag">Interior Design</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPS Obstacle Map -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image38.jpeg" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#13</div>
+          <h3>Obstacle Map - Real-World GPS Traversability Map</h3>
+          <p>
+            A real-world GPS map that models traversable space, not just routes. Features live GPS tracking, 3D building extrusions from OpenStreetMap, and a collision/occupancy heatmap. Built for spatial cognition research, robotics, AR, and accessibility applications.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">WebGL</span>
+            <span class="tag">OpenStreetMap</span>
+            <span class="tag">GPS</span>
+            <span class="tag">Robotics</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/obstacle-map" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drone Cloud -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image50.png" loading="lazy" class="active">
+      <img src="images/image51.png" loading="lazy">
+      <img src="images/image52.jpeg" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#18</div>
+          <h3>Drone Cloud - Aerial AI Spatial Scanning</h3>
+          <p>
+            Using a drone and AI, create spatial scans of real environments analyzable for distances, spatial orientation, thematic segmentation of objects/sizes, and occupancy grids using Python. Demonstrates depth colorization, semantic segmentation overlays, and 3D point cloud generation from drone footage.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Drone</span>
+            <span class="tag">Point Cloud</span>
+            <span class="tag">Spatial Analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Robot SLAM -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image88.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#32</div>
+          <h3>Robot SLAM Simulator 3D</h3>
+          <p>
+            Interactive SLAM demonstration where clicking any object in a 3D room causes a robot to automatically plan a path, avoid obstacles, and update its environmental map in real time. Shows SLAM algorithms in practice - from robot localization to A* path planning.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">SLAM</span>
+            <span class="tag">Pathfinding</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/robot-slam-simulator-3d" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 4. SIMULATIONS & ARTIFICIAL LIFE ══ -->
+  <section class="section" id="simulations">
+    <div class="section-header">
+      <div class="section-icon">🧬</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 04</div>
+        <h2>Simulations & Artificial Life</h2>
+        <p class="section-desc">Emergence, evolution, particle physics, and artificial ecosystems - complexity from simple rules.</p>
+      </div>
+    </div>
+    <div class="grid">
+
+      <!-- Bio-Evo Sim -->
+      <div class="card">
+        <div class="card-accent-line"></div>
+    <div class="card-gallery">
+      <img src="images/image43.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#15</div>
+          <h3>Bio-Evo Sim - Interactive Bio-Evolutionary Particle Simulation</h3>
+          <p>
+            Particles governed by basic interaction rules (attraction/repulsion by type) spontaneously form complex self-organizing structures resembling living organisms - from simple clusters to ecosystems with predation, symbiosis, and reproduction. Adjustable parameters (forces, velocities, friction, particle types) enable exploring infinite "worlds" and discovering new digital life forms.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Emergence</span>
+            <span class="tag">Artificial Life</span>
+            <span class="tag">Evolution</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biomorphs -->
+      <div class="card">
+        <div class="card-accent-line"></div>
+    <div class="card-gallery">
+      <img src="images/image8.png" loading="lazy" class="active">
+      <img src="images/image9.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#03 (alt)</div>
+          <h3>3D Biomorphs - Dawkins' Blind Watchmaker in 3D</h3>
+          <p>
+            A recreation of Dawkins' classic Biomorphs from <em>The Blind Watchmaker</em>, now with behavior mutations in 3D. Simple genetic parameters evolve shapes and movements illustrating how cumulative selection produces complexity without foresight. Also includes the original 2D Biomorphs version as described by Dawkins.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Genetic Algorithms</span>
+            <span class="tag">Evolution</span>
+            <span class="tag">3D</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/biomorphs" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evolution 3D / Protos -->
+      <div class="card">
+        <div class="card-accent-line"></div>
+    <div class="card-gallery">
+      <img src="images/image39.jpeg" loading="lazy" class="active">
+      <img src="images/image40.png" loading="lazy">
+      <img src="images/image41.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#14</div>
+          <h3>Evolution 3D & PROTOS - Emergent Life Simulations</h3>
+          <p>
+            Two particle-life simulations: <strong>Evolution 3D</strong> - 3D particles with interaction rule matrices that spontaneously form molecule- and orbital-like patterns; press * for new random rules. <strong>PROTOS</strong> - 2D emergent life where simple particle interactions produce creature-like behavior. No scripts, no agents - pure bottom-up emergence.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Particle Life</span>
+            <span class="tag">3D</span>
+            <span class="tag">Emergence</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/evolution-3d" target="_blank">Evolution 3D</a>
+            <a class="btn btn-secondary" href="https://websim.com/@TomaszW/protos" target="_blank">PROTOS</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MechEvo -->
+      <div class="card">
+        <div class="card-accent-line"></div>
+    <div class="card-gallery">
+      <img src="images/image62.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#22</div>
+          <h3>MechEvo - Mechanical Creatures That Dock & Evolve</h3>
+          <p>
+            Mechanical creatures with physical joints and sensors that dock onto each other, form increasingly complex mega-structures, and evolve over generations. Emergent locomotion strategies arise from physical constraints and selection pressure.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Physics</span>
+            <span class="tag">Evolution</span>
+            <span class="tag">Procedural</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/mechevo" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Virtual People -->
+      <div class="card">
+        <div class="card-accent-line"></div>
+    <div class="card-gallery">
+      <img src="images/image86.png" loading="lazy" class="active">
+      <img src="images/image87.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#31</div>
+          <h3>Virtual People Simulation - AI-Driven Social World</h3>
+          <p>
+            Observe the interactions, decisions, and lives of AI-driven people in a virtual world. Each character makes autonomous decisions about where to go and what to do, interacts with locations and other characters, and adapts to random weather events. Thought bubbles reveal their real-time activities, emotions, and social connections.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Agent Simulation</span>
+            <span class="tag">Social AI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text-to-Creature -->
+      <div class="card">
+        <div class="card-accent-line"></div>
+    <div class="card-gallery">
+      <img src="images/image85.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#30</div>
+          <h3>Text-to-Creature - Your Text Becomes Life</h3>
+          <p>
+            Each letter in your text is DNA: vowels = muscles, consonants = bones, numbers = sensors. Different text sequences create different 3D organisms that crawl, pulse, and move with realistic physics simulation. Type any string and watch it become a living creature.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Physics</span>
+            <span class="tag">Procedural Generation</span>
+            <span class="tag">3D</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/text-to-creature" target="_blank">Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 5. GAMES & INTERACTIVE ══ -->
+  <section class="section" id="games-interactive">
+    <div class="section-header">
+      <div class="section-icon">🎮</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 05</div>
+        <h2>Games & Interactive Experiences</h2>
+        <p class="section-desc">Browser-based worlds, simulators, and interactive experiments - all running in real time without installation.</p>
+      </div>
+    </div>
+    <div class="grid">
+
+      <!-- Nexus MUD -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image25.jpeg" loading="lazy" class="active">
+      <img src="images/image26.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#09</div>
+          <h3>Nexus-MUD - Infinite AI-Generated Text World</h3>
+          <p>
+            Each play-through generates a new universe - unique, unpredictable, governed by its own logic. Explore a vast chessboard-like map; every step generates a new location, landscape, or story in real time via AI. Every location, character, and event is permanently stored in world memory. The further you travel from the starting point, the stranger the world becomes - from classic fantasy to surreal abstract realities.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">AI</span>
+            <span class="tag">Persistent World</span>
+            <span class="tag">MUD</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/nexus-mud" target="_blank">Play Free</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exoplanet Explorer -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image64.png" loading="lazy" class="active">
+      <img src="images/image65.png" loading="lazy">
+      <img src="images/image66.png" loading="lazy">
+      <img src="images/image67.png" loading="lazy">
+      <img src="images/image68.png" loading="lazy">
+      <img src="images/image69.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#25</div>
+          <h3>Exoplanet Explorer - Procedural Alien World Discovery</h3>
+          <p>
+            Explore a procedurally generated universe of exoplanets filled with strange lifeforms and unexplained phenomena. Discover unique ecosystems, encounter rare anomalies, and capture extraordinary creatures - each with detailed characteristics. Scan, collect, and build your own cosmic archive as you travel across distant star systems.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Procedural</span>
+            <span class="tag">Exploration</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/explorer" target="_blank">Play</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interstellar -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image53.png" loading="lazy" class="active">
+      <img src="images/image54.png" loading="lazy">
+      <img src="images/image55.png" loading="lazy">
+      <img src="images/image56.png" loading="lazy">
+      <img src="images/image57.png" loading="lazy">
+      <img src="images/image58.png" loading="lazy">
+      <img src="images/image59.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#19</div>
+          <h3>Interstellar - Universal Atlas 3D</h3>
+          <p>
+            Interactive 3D atlas of the universe with seamless scale transitions - from atomic and molecular structures through cells, grass, planets (Mercury to Neptune), star systems, the Milky Way, and large-scale cosmic structure. Spatial exploration with a unified model of the cosmos, real-time audio systems, and clickable object info panels.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">3D</span>
+            <span class="tag">Science</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shake It -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image70.png" loading="lazy" class="active">
+      <img src="images/image71.png" loading="lazy">
+      <img src="images/image72.png" loading="lazy">
+      <img src="images/image73.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#26</div>
+          <h3>Shake It! Cataclysm - Physics Destruction Simulator</h3>
+          <p>
+            Choose your force - earthquake, tornado, or meteor - and watch the city face it in real time. Shake your smartphone to trigger earthquakes. Dynamic physics, collapsing structures, shockwaves, and debris make every scenario unpredictable. City Integrity meter tracks total destruction progress.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Physics</span>
+            <span class="tag">Mobile</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/shakeit" target="_blank">Play</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flight Sim -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image61.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#21</div>
+          <h3>Flight Simulator - Fly Anywhere on Earth</h3>
+          <p>
+            A realistic browser-based flight simulator with real-time dynamic weather, a seamless day-night cycle, and hundreds of detailed airports from major hubs to mountain strips and island runways. Complete freedom to choose route, aircraft, and conditions.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Flight Sim</span>
+            <span class="tag">Browser</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/flightsim" target="_blank">Fly</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drone Sim -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image82.png" loading="lazy" class="active">
+      <img src="images/image83.png" loading="lazy">
+      <img src="images/image84.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#29</div>
+          <h3>DJI Drone Simulator - Realistic Browser Drone Flight</h3>
+          <p>
+            Fly a DJI drone in a large realistic 3D world with buildings, trees, and terrain. Physically accurate flight model, realistic FPV and third-person camera modes, Unreal Engine–level visuals - entirely in the browser. No installation.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Physics</span>
+            <span class="tag">FPV</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/dji-mini-simulator" target="_blank">Fly</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kitchen AR -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image44.png" loading="lazy" class="active">
+      <img src="images/image45.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#15b</div>
+          <h3>AI Kitchen Sim - Webcam-Controlled VR Kitchen</h3>
+          <p>
+            Step into a realistic kitchen in first-person view without controllers or VR headsets. Advanced head and hand tracking via a standard webcam lets you look around, control virtual hands, and physically interact with objects - grab pots, open cabinets, stir ingredients - with realistic physics.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">MediaPipe</span>
+            <span class="tag">WebXR</span>
+            <span class="tag">Physics</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/ai-kitchen-sim" target="_blank">Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fur Ball -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image74.png" loading="lazy" class="active">
+      <img src="images/image75.png" loading="lazy">
+      <img src="images/image76.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#27</div>
+          <h3>Fur Ball - Tactile Relaxation Experience</h3>
+          <p>
+            A calming, tactile browser experience. Gently pull, brush, and stroke a soft furry sphere rendered with real-time strand simulation. Multiple modes including grass and magma. Designed as a simple, soothing interaction for stress relief and focus.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">WebGL</span>
+            <span class="tag">Interactive Art</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/fur" target="_blank">Try</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quantum Orbitals -->
+      <div class="card">
+        <div class="card-accent-line blue"></div>
+    <div class="card-gallery">
+      <img src="images/image63.png" loading="lazy" class="active">
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#24</div>
+          <h3>Quantum Orbitals 3D - Real Wave Function Visualization</h3>
+          <p>
+            Interactive 3D visualization of atomic orbitals showing electron probability distributions around the nucleus. Each particle's position is calculated using real quantum wave functions from Schrödinger's equation. Rotate and explore different orbital shapes by adjusting quantum numbers (n, ℓ, m).
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Quantum Mechanics</span>
+            <span class="tag">Science Viz</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/orbitals" target="_blank">Explore</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 6. EDUCATION ══ -->
+  <section class="section" id="education">
+    <div class="section-header">
+      <div class="section-icon">📚</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 06</div>
+        <h2>Education & Learning Tools</h2>
+        <p class="section-desc">Hands-on tools for understanding AI architecture, neural networks, and complex systems from first principles.</p>
+      </div>
+    </div>
+    <div class="grid">
+
+      <!-- edu-transformer -->
+      <div class="card">
+        <div class="card-accent-line red"></div>
+        <div class="card-body">
+          <div class="card-num">#05</div>
+          <h3>edu-transformer - GPT Architecture in One Python Script</h3>
+          <p>
+            A free, hands-on GPT course in a single Python script. Same architecture as GPT-2/3/4, just 8K parameters instead of 1.8T. Run it instead of watching 4-hour lectures: build/train/generate text in 3 seconds, debug mode showing every tensor and attention weight, compare tiny/small/medium models side-by-side, run ablation studies, take quizzes, and use an interactive playground. No GPU needed.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">Transformers</span>
+            <span class="tag">GPT</span>
+            <span class="tag">MIT License</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/edu-transformer" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- OneLook -->
+      <div class="card">
+        <div class="card-accent-line red"></div>
+    <div class="card-gallery">
+      <img src="images/image19.jpeg" loading="lazy" class="active">
+      <img src="images/image20.jpeg" loading="lazy">
+      <img src="images/image21.jpeg" loading="lazy">
+      <img src="images/image22.jpeg" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#07</div>
+          <h3>OneLook - Visual Answer Engine</h3>
+          <p>
+            A new kind of AI experience where answers are delivered not as text but as a single visual. Enter any question and instead of reading paragraphs, you instantly see an AI-generated image representing the idea behind your query. Fast, intuitive, entirely visual - turns questions into pictures.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">AI Image Generation</span>
+            <span class="tag">UX Experiment</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/onelook" target="_blank">Try</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 7. MISC / OTHER ══ -->
+  <section class="section" id="misc">
+    <div class="section-header">
+      <div class="section-icon">🔬</div>
+      <div class="section-meta">
+        <div class="section-tag">Category 07</div>
+        <h2>Experiments & Other Projects</h2>
+        <p class="section-desc">Side projects, UI experiments, and creative explorations.</p>
+      </div>
+    </div>
+    <div class="grid">
+
+      <!-- PersonaX -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image27.jpeg" loading="lazy" class="active">
+      <img src="images/image28.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#10</div>
+          <h3>PersonaX - Customizable Real-Time Virtual Persona</h3>
+          <p>
+            Talk in real time with a virtual persona. Upload a face, set a personality, tweak the voice, and chat live. Supports 3 languages, fully customizable characters including face detection fine-tuning and voice selection.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Face Tracking</span>
+            <span class="tag">TTS</span>
+            <span class="tag">AI Chat</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Web Environment -->
+      <div class="card">
+        <div class="card-accent-line gold"></div>
+    <div class="card-gallery">
+      <img src="images/image77.png" loading="lazy" class="active">
+      <img src="images/image78.png" loading="lazy">
+      <img src="images/image79.png" loading="lazy">
+      <img src="images/image80.png" loading="lazy">
+      <img src="images/image81.png" loading="lazy">
+      <button class="gallery-btn prev">&#8592;</button>
+      <button class="gallery-btn next">&#8594;</button>
+      <div class="gallery-dots"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+    </div>
+
+        <div class="card-body">
+          <div class="card-num">#28</div>
+          <h3>Advanced 3D Web Environment - Unreal-Level Browser World</h3>
+          <p>
+            A full Unreal Engine–style interactive 3D world running entirely in the browser. Swim, fire lasers, watch procedurally animated animals, and explore dynamic weather systems - all in real time, no installation.
+          </p>
+          <div class="card-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">3D World</span>
+            <span class="tag">Procedural</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/advanced-3d-web-environment" target="_blank">Explore</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <p>
+    Tomasz Wietrzykowski &nbsp;·&nbsp;
+    <a href="https://github.com/tomaszwi66" target="_blank">github.com/tomaszwi66</a>
+    &nbsp;·&nbsp; All projects MIT licensed &nbsp;·&nbsp; Built without cloud or subscriptions
+  </p>
+</footer>
+
+<!-- ═══════════════ SOCIAL FOOTER ═══════════════ -->
+<div class="social-footer">
+  <div class="social-footer-inner">
+
+    <a class="social-link" href="https://www.facebook.com/share/1ARGkDaEvf/" target="_blank" rel="noopener">
+      <img src="images/logo_aichannel.jpg" alt="AI Channel logo">
+      AI Channel
+    </a>
+
+    <span class="social-sep">·</span>
+
+    <a class="social-link" href="https://x.com/twf24" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      @twf24
+    </a>
+
+    <span class="social-sep">·</span>
+
+    <a class="social-link" href="https://websim.ai/@tomaszw" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      WebSim
+    </a>
+
+  </div>
+</div>
+
+<script>
+  // smooth nav scroll
+  function scrollTo(id) {
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // highlight nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navBtns  = document.querySelectorAll('.nav-btn');
+  const sectionIds = ['#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#misc'];
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = '#' + e.target.id;
+        const idx = sectionIds.indexOf(id);
+        navBtns.forEach((b,i) => b.classList.toggle('active', i === idx));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+
+<script>
+(function(){
+  document.querySelectorAll('.card-gallery').forEach(function(gallery){
+    var imgs = gallery.querySelectorAll('img');
+    if(imgs.length <= 1) return;
+    var idx = 0;
+    var dots = gallery.querySelectorAll('.gallery-dot');
+    function show(n){
+      imgs[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = (n + imgs.length) % imgs.length;
+      imgs[idx].classList.add('active');
+      dots[idx].classList.add('active');
+    }
+    // autoplay - każda galeria startuje z losowym offsetem żeby nie zmieniały się wszystkie naraz
+    var delay = 3200 + Math.random() * 1400;
+    var timer = setInterval(function(){ show(idx + 1); }, delay);
+    // po ręcznym kliknięciu reset timera
+    function resetTimer(){
+      clearInterval(timer);
+      timer = setInterval(function(){ show(idx + 1); }, delay);
+    }
+    gallery.querySelector('.gallery-btn.prev').addEventListener('click', function(e){
+      e.stopPropagation(); show(idx-1); resetTimer();
+    });
+    gallery.querySelector('.gallery-btn.next').addEventListener('click', function(e){
+      e.stopPropagation(); show(idx+1); resetTimer();
+    });
+    dots.forEach(function(dot, i){
+      dot.addEventListener('click', function(e){ e.stopPropagation(); show(i); resetTimer(); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -762,7 +762,7 @@
           <div class="card-num">#01</div>
           <h3>Mini Dreamer - Interactive World Model with Real-Time Online Learning</h3>
           <p>
-            A minimal but complete world model system that learns to predict future observations while you explore a procedurally generated 3D environment in real time. Every step becomes training data fed into a replay buffer; a mini-batch gradient update fires every step. Features CNN Encoder → 64-dim VAE latent, GRU-based RSSM (256-dim) for temporal dynamics, and a "Pure Dream Mode" where the model generates predictions from its own previous outputs - letting you watch errors compound and representation quality degrade.
+            A minimal world model that learns to predict future observations as you explore a 3D environment in real time. Every step triggers a live gradient update - CNN Encoder → VAE latent → GRU-based RSSM for temporal dynamics, plus a "Pure Dream Mode" where the model hallucinates entirely from its own outputs.
           </p>
           <div class="metrics">
             <span class="metric">MAE <strong>18.8 → 9.9 (↓47%)</strong></span>
@@ -1363,6 +1363,9 @@
             <span class="tag">3D</span>
             <span class="tag">Science</span>
           </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/interstellar" target="_blank">Live Demo</a>
+          </div>
         </div>
       </div>
 
@@ -1639,6 +1642,9 @@
             <span class="tag">Face Tracking</span>
             <span class="tag">TTS</span>
             <span class="tag">AI Chat</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/personax" target="_blank">Live Demo</a>
           </div>
         </div>
       </div>

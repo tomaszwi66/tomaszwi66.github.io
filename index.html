@@ -630,6 +630,95 @@
       background: var(--accent2);
       color: #000;
     }
+
+    /* ===== PRODUCTION SYSTEM CARD ===== */
+    .production-card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,160,0.25);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(0,229,160,0.05);
+    }
+    .production-header {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .production-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 3px 10px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+    .production-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 12px;
+    }
+    .production-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 780px;
+    }
+    .production-desc + .production-desc {
+      margin-top: 10px;
+    }
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+    .module-item {
+      background: var(--card);
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .module-item:hover {
+      background: rgba(0,229,160,0.03);
+    }
+    .module-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .05em;
+    }
+    .module-detail {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .production-footer {
+      padding: 18px 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .production-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .production-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .05em;
+    }
   </style>
 </head>
 <body>
@@ -674,7 +763,8 @@
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav>
   <div class="nav-inner">
-    <button class="nav-btn active" onclick="scrollTo('#ai-agents')">AI Agents</button>
+    <button class="nav-btn active" onclick="scrollTo('#production')">Production</button>
+    <button class="nav-btn" onclick="scrollTo('#ai-agents')">AI Agents</button>
     <button class="nav-btn" onclick="scrollTo('#ml-research')">ML Research</button>
     <button class="nav-btn" onclick="scrollTo('#spatial-ar')">Spatial & AR</button>
     <button class="nav-btn" onclick="scrollTo('#simulations')">Simulations</button>
@@ -688,7 +778,83 @@
 <!-- ═══════════════ MAIN ═══════════════ -->
 <main>
 
-  <!-- ══ 1. AI AGENTS & LOCAL TOOLS ══ -->
+  <!-- ══ 0. PRODUCTION SYSTEMS ══ -->
+  <section class="section" id="production">
+    <div class="section-header">
+      <div class="section-icon">⚙️</div>
+      <div class="section-meta">
+        <div class="section-tag">Production · Closed Source</div>
+        <h2>Production Systems</h2>
+        <p class="section-desc">Enterprise-grade systems built and deployed in real production environments. Closed source.</p>
+      </div>
+    </div>
+
+    <div class="production-card">
+
+      <div class="production-header">
+        <div class="production-badge">⭐ Flagship · Production</div>
+        <div class="production-title">Enterprise RPA &amp; Data Management Suite</div>
+        <p class="production-desc">
+          A comprehensive Robotic Process Automation and Data Management ecosystem architected and built from scratch - acting as a central integration hub seamlessly bridging modern web portals, closed legacy desktop applications, local databases, and cloud services (Google Workspace).
+        </p>
+        <p class="production-desc" style="margin-top:10px;">
+          Eliminates thousands of hours of manual labor by fully automating mass report downloading, unstructured PDF data extraction, spreadsheet synchronization, and dynamic document generation. Scales to 1.3M+ records without UI freezing.
+        </p>
+      </div>
+
+      <div class="modules-grid">
+
+        <div class="module-item">
+          <div class="module-name">📊 High-Performance Analytical Database</div>
+          <div class="module-detail">DuckDB + Pandas ETL pipeline. Ingests and queries datasets exceeding 1.3M records. Vectorized mass inserts, fuzzy search, and dynamic value mapping for instant retrieval despite typos or inconsistent formatting.</div>
+        </div>
+
+        <div class="module-item">
+          <div class="module-name">🌐 Advanced Web Automation</div>
+          <div class="module-detail">Async Playwright bots navigating complex React/MUI SPAs. Bypasses dynamically rendered DOMs, hidden iframes, and non-standard components. Bulletproof mass downloads via active polling and race-condition mitigation.</div>
+        </div>
+
+        <div class="module-item">
+          <div class="module-name">🖥️ Legacy Desktop Automation</div>
+          <div class="module-detail">Pywinauto + PyAutoGUI orchestrating closed-source legacy apps (Delphi/Win32) with no API access. Hybrid approach: native Windows API hooks combined with OpenCV template matching and OCR - resolution and DPI-agnostic.</div>
+        </div>
+
+        <div class="module-item">
+          <div class="module-name">📄 Intelligent Document Processing</div>
+          <div class="module-detail">PyMuPDF parses unstructured ticket/report PDFs. NLP + Regex auto-categorizes requests and populates the UI. Dynamically maps filtered DB records into .docx templates - generating print-ready legal protocols on the fly.</div>
+        </div>
+
+        <div class="module-item">
+          <div class="module-name">⚡ Mass File Search Engine</div>
+          <div class="module-detail">Thread-pool concurrent engine scanning gigabytes of raw text files in seconds. Instantly extracts matching records and exports them into cleanly formatted Excel spreadsheets via openpyxl.</div>
+        </div>
+
+        <div class="module-item">
+          <div class="module-name">🔐 Security &amp; Background Daemon</div>
+          <div class="module-detail">AES encryption module for credential management across multiple platforms. Master password decrypts at startup and injects credentials into isolated child processes via os.environ. Custom daemon boots with Windows, evaluates schedules, and maintains detailed audit logs.</div>
+        </div>
+
+      </div>
+
+      <div class="production-footer">
+        <div class="production-tags">
+          <span class="tag">Python</span>
+          <span class="tag">DuckDB</span>
+          <span class="tag">Playwright</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag">Pywinauto</span>
+          <span class="tag">PyMuPDF</span>
+          <span class="tag">Google Sheets API</span>
+          <span class="tag">RPA</span>
+          <span class="tag">AES</span>
+        </div>
+        <div class="production-note">// closed source · production deployed</div>
+      </div>
+
+    </div>
+  </section>
+
   <section class="section" id="ai-agents">
     <div class="section-header">
       <div class="section-icon">🤖</div>
@@ -1940,7 +2106,7 @@
   // highlight nav on scroll
   const sections = document.querySelectorAll('section[id]');
   const navBtns  = document.querySelectorAll('.nav-btn');
-  const sectionIds = ['#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
+  const sectionIds = ['#production','#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
 
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {

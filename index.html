@@ -568,6 +568,68 @@
       font-size: 18px;
       user-select: none;
     }
+
+    /* ===== TOOLS SECTION ===== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
+    }
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color .2s, transform .2s;
+    }
+    .tool-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-2px);
+    }
+    .tool-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tool-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .tool-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .tool-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .tool-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .btn-tool {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 3px;
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-tool:hover {
+      background: var(--accent2);
+      color: #000;
+    }
   </style>
 </head>
 <body>
@@ -618,6 +680,7 @@
     <button class="nav-btn" onclick="scrollTo('#simulations')">Simulations</button>
     <button class="nav-btn" onclick="scrollTo('#games-interactive')">Games & Interactive</button>
     <button class="nav-btn" onclick="scrollTo('#education')">Education</button>
+    <button class="nav-btn" onclick="scrollTo('#web-tools')">Web Tools</button>
     <button class="nav-btn" onclick="scrollTo('#misc')">Other</button>
   </div>
 </nav>
@@ -762,7 +825,7 @@
           <div class="card-num">#01</div>
           <h3>Mini Dreamer - Interactive World Model with Real-Time Online Learning</h3>
           <p>
-            A minimal world model that learns to predict future observations as you explore a 3D environment in real time. Every step triggers a live gradient update - CNN Encoder → VAE latent → GRU-based RSSM for temporal dynamics, plus a "Pure Dream Mode" where the model hallucinates entirely from its own outputs.
+            A minimal but complete world model system that learns to predict future observations while you explore a procedurally generated 3D environment in real time. Every step becomes training data fed into a replay buffer; a mini-batch gradient update fires every step. Features CNN Encoder → 64-dim VAE latent, GRU-based RSSM (256-dim) for temporal dynamics, and a "Pure Dream Mode" where the model generates predictions from its own previous outputs - letting you watch errors compound and representation quality degrade.
           </p>
           <div class="metrics">
             <span class="metric">MAE <strong>18.8 → 9.9 (↓47%)</strong></span>
@@ -1684,6 +1747,146 @@
     </div>
   </section>
 
+  <!-- ══ TOOLS ══ -->
+  <section class="section" id="web-tools">
+    <div class="section-header">
+      <div class="section-icon">🛠️</div>
+      <div class="section-meta">
+        <div class="section-tag">Web & Mobile Tools</div>
+        <h2>Interactive Tools & Experiments</h2>
+        <p class="section-desc">Browser-based tools - accessibility, computer vision, gesture control, AR, and creative apps. Run directly in your browser or on mobile.</p>
+      </div>
+    </div>
+    <div class="tools-grid">
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">👁️</span>
+          <span class="tool-name">EyeSpeaker</span>
+        </div>
+        <p class="tool-desc">Text input using eye gaze - no keyboard, no mouse. AI predicts next words and phrases; select them just by looking at the screen. Designed for users with limited mobility.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/eyespeaker" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">✍️</span>
+          <span class="tool-name">AI Handwriting Notes</span>
+        </div>
+        <p class="tool-desc">Write with your finger directly on the screen - AI instantly recognizes letters and sentences in real time and converts them to clean text. No keyboard, no stylus.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/ai-handwriting-notes" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🗣️</span>
+          <span class="tool-name">SpeakNow</span>
+        </div>
+        <p class="tool-desc">Real-time text-to-speech communication aid for people who cannot speak. Type a message and it is instantly spoken aloud - fast, simple, barrier-free.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/speaknow" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">📳</span>
+          <span class="tool-name">Haptic Nav</span>
+        </div>
+        <p class="tool-desc">Screen-free haptic navigation for visually impaired users. Silent when on route - increasing vibrations when deviating. No screen needed, works entirely through touch feedback.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/haptic-nav" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🎭</span>
+          <span class="tool-name">AI Character Animator & FaceMorph</span>
+        </div>
+        <p class="tool-desc">Load any image - background is removed and the character is animated. FaceMorph mirrors your real-time facial movements onto any photo. Record and download in seconds.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/ai-character-animator" target="_blank">Animator →</a>
+          <a class="btn-tool" href="https://websim.com/@TomaszW/facemorph" target="_blank">FaceMorph →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🦾</span>
+          <span class="tool-name">Hand-Controlled Robot Arm</span>
+        </div>
+        <p class="tool-desc">Control a virtual robotic arm by moving your hand in front of the camera. Works on both laptop and smartphone rear camera. A teleoperation prototype built entirely in the browser.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/hand-controlled-robot-arm" target="_blank">Robot Arm →</a>
+          <a class="btn-tool" href="https://websim.com/@TomaszW/teleoperation" target="_blank">Teleoperation →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🏗️</span>
+          <span class="tool-name">AR Mesh Builder</span>
+        </div>
+        <p class="tool-desc">Build a 3D model of your surroundings through your phone camera - tap to place points and walls, walk around to view from different angles, export as GLB. No ARCore or SLAM required.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/ar-mesh-builder" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">📷</span>
+          <span class="tool-name">Depth 3D</span>
+        </div>
+        <p class="tool-desc">Real-time depth map generation from your camera feed. Visualizes scene geometry live - useful for computer vision experiments and spatial understanding demos.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/depth" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🚧</span>
+          <span class="tool-name">Obstacle Detector</span>
+        </div>
+        <p class="tool-desc">Uses your phone camera and flashlight to detect obstacles in real time. Measures brightness differences between frames to estimate relative distance - no depth sensor needed.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/obstacle-detector" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🎹</span>
+          <span class="tool-name">Virtual Piano</span>
+        </div>
+        <p class="tool-desc">Play a piano using only your hands in front of the camera - no touch required. Two versions with different interaction modes. A creative gesture-control music experiment.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/piano" target="_blank">Piano v1 →</a>
+          <a class="btn-tool" href="https://websim.com/@TomaszW/piano2" target="_blank">Piano v2 →</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <span class="tool-icon">🖱️</span>
+          <span class="tool-name">Windows Hand Gesture Simulation</span>
+        </div>
+        <p class="tool-desc">A prototype for controlling a desktop interface using hand movements and camera - no mouse, no keyboard. Pinch gesture performs a click. A proof-of-concept for gesture-driven OS control.</p>
+        <div class="tool-links">
+          <a class="btn-tool" href="https://websim.com/@TomaszW/windows-11-hand-gesture-simulation" target="_blank">Try it →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
 </main>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
@@ -1737,7 +1940,7 @@
   // highlight nav on scroll
   const sections = document.querySelectorAll('section[id]');
   const navBtns  = document.querySelectorAll('.nav-btn');
-  const sectionIds = ['#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#misc'];
+  const sectionIds = ['#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
 
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {

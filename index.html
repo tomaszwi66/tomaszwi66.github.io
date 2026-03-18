@@ -719,6 +719,151 @@
       color: var(--muted);
       letter-spacing: .05em;
     }
+
+    /* ===== ABOUT SECTION ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-bio {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    .about-bio h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .about-bio p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .about-bio p:last-child { margin-bottom: 0; }
+
+    .timeline {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    .timeline h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 46px;
+      top: 22px;
+      bottom: -18px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-year {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      min-width: 40px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+    .timeline-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .timeline-content strong {
+      display: block;
+      font-size: 13px;
+      color: var(--fg);
+      margin-bottom: 2px;
+    }
+    .timeline-content span {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .open-to-box {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(0,229,160,0.05), rgba(0,163,255,0.05));
+      border: 1px solid rgba(0,229,160,0.2);
+      border-radius: 8px;
+      padding: 22px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .open-to-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .open-to-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .open-to-tag {
+      font-size: 12px;
+      font-family: var(--mono);
+      padding: 5px 12px;
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+      border-radius: 3px;
+    }
+
+    .stack-row {
+      grid-column: 1 / -1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 28px;
+    }
+    .stack-row h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .stack-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
   </style>
 </head>
 <body>
@@ -763,6 +908,7 @@
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav>
   <div class="nav-inner">
+    <button class="nav-btn" onclick="scrollTo('#about')">About</button>
     <button class="nav-btn active" onclick="scrollTo('#production')">Production</button>
     <button class="nav-btn" onclick="scrollTo('#ai-agents')">AI Agents</button>
     <button class="nav-btn" onclick="scrollTo('#ml-research')">ML Research</button>
@@ -775,8 +921,122 @@
   </div>
 </nav>
 
+
 <!-- ═══════════════ MAIN ═══════════════ -->
 <main>
+
+  <!-- ══ ABOUT ══ -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <div class="section-icon">👤</div>
+      <div class="section-meta">
+        <div class="section-tag">About</div>
+        <h2>Background & Timeline</h2>
+      </div>
+    </div>
+
+    <div class="about-grid">
+
+      <!-- BIO -->
+      <div class="about-bio">
+        <h4>Bio</h4>
+        <p>
+          Independent AI researcher and developer. M.Sc. in natural sciences, also studied at Wrocław University of Science and Technology.
+        </p>
+        <p>
+          Core interests lie at the intersection of cognitive science, computational neuroscience, and artificial intelligence - how the brain processes information, how intelligent behaviour emerges, and how these principles translate into engineered systems.
+        </p>
+        <p>
+          The work spans bio-inspired neural architectures, autonomous AI agents, production automation systems, and browser-based computer vision. The approach is consistent: build, test, observe, iterate.
+        </p>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline">
+        <h4>Timeline</h4>
+
+        <div class="timeline-item">
+          <span class="timeline-year">~90s</span>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>First programs in BASIC</strong>
+            <span>Early experiments with code and simple conversational programs.</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">~2000s</span>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Neural networks, cognitive science & early chatbots</strong>
+            <span>Reading on artificial neural networks, brain architecture, and robotics - alongside testing various conversational AI systems available at the time.</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2022</span>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>GPT-3 API - systematic work begins</strong>
+            <span>First systematic work with large language models via the GPT-3 API - well before ChatGPT was publicly available.</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2024</span>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Bio-inspired AI &amp; computer vision</strong>
+            <span>Spiking neural networks, world models, cognitive architectures, and first practical computer vision tools.</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2026</span>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Agents, automation & enterprise deployments</strong>
+            <span>Local-first AI agents (ATLAS, GroqAgent, Agentflow) and production RPA system with 1.3M+ records.</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">Now</span>
+          <div class="timeline-dot" style="background:var(--accent2);"></div>
+          <div class="timeline-content">
+            <strong>Spatial AI, accessibility, and multi-agent systems</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- WHAT SETS ME APART -->
+      <div class="stack-row" style="grid-column: 1 / -1;">
+        <h4>Focus areas</h4>
+        <div class="stack-items">
+          <span class="tag">Bio-inspired AI - spiking nets, world models, cognitive maps</span>
+          <span class="tag">Local-first agent architectures</span>
+          <span class="tag">Enterprise RPA & production automation</span>
+          <span class="tag">Browser-based CV & AR</span>
+          <span class="tag">Research → prototype → production</span>
+        </div>
+      </div>
+
+      <!-- OPEN TO -->
+      <div class="open-to-box">
+        <span class="open-to-label">Open to</span>
+        <div class="open-to-tags">
+          <span class="open-to-tag">AI Researcher</span>
+          <span class="open-to-tag">AI / ML Engineer</span>
+          <span class="open-to-tag">AI Agent Developer</span>
+          <span class="open-to-tag">Computer Vision Engineer</span>
+          <span class="open-to-tag">Automation Engineer</span>
+          <span class="open-to-tag">RPA Developer</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ══ 0. PRODUCTION SYSTEMS ══ -->
   <section class="section" id="production">
@@ -1849,7 +2109,7 @@
     </div>
     <div class="tools-grid">
 
-      <div class="tool-card">
+      <div class="tool-card card">
         <div class="tool-card-header">
           <span class="tool-icon">👁️</span>
           <span class="tool-name">EyeSpeaker</span>
@@ -1871,7 +2131,7 @@
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card card">
         <div class="tool-card-header">
           <span class="tool-icon">🗣️</span>
           <span class="tool-name">SpeakNow</span>
@@ -1882,7 +2142,7 @@
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card card">
         <div class="tool-card-header">
           <span class="tool-icon">📳</span>
           <span class="tool-name">Haptic Nav</span>
@@ -1939,7 +2199,7 @@
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card card">
         <div class="tool-card-header">
           <span class="tool-icon">🚧</span>
           <span class="tool-name">Obstacle Detector</span>
@@ -2106,7 +2366,7 @@
   // highlight nav on scroll
   const sections = document.querySelectorAll('section[id]');
   const navBtns  = document.querySelectorAll('.nav-btn');
-  const sectionIds = ['#production','#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
+  const sectionIds = ['#about','#production','#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
 
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -2154,6 +2414,8 @@
     });
   });
 })();
+
+
 </script>
 </body>
 </html>

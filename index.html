@@ -883,7 +883,7 @@
     </p>
     <div class="header-stats">
     <div class="stat">
-      <div class="stat-num">34+</div>
+      <div class="stat-num">35+</div>
       <div class="stat-label">Projects</div>
     </div>
     <div class="stat">
@@ -1274,6 +1274,54 @@
           </div>
         </div>
       </div>
+
+      <!-- WorldSim -->
+      <div class="card featured">
+        <div class="card-accent-line red"></div>
+        <div class="card-gallery">
+          <img src="images/worldsim_card.jpg" loading="lazy" class="active">
+        </div>
+        <div class="card-body">
+          <div class="featured-badge">⭐ Research Project</div>
+          <div class="card-num">#35</div>
+          <h3>WorldSim - Playable Neural World Model from Real Video</h3>
+          <p>
+            End-to-end pipeline for training and playing a neural world model on self-recorded footage.
+            A custom browser app captures video frames at 15 FPS alongside IMU data - accelerometer,
+            gyroscope, and device orientation - fused with optical flow keypoint tracking to automatically
+            infer the action vector <code>[dx, dy]</code> per frame. No manual labeling.
+          </p>
+          <p style="margin-top:10px;">
+            Architecture: Convolutional RSSM with residual blocks (GroupNorm + SiLU), GRU recurrent state
+            (hidden 512), VAE-style stochastic latent (dim 256), and perceptual loss (VGG16 features) for
+            sharp frame reconstruction. Once trained on Kaggle T4, every gameplay frame is 100% generated
+            by the network - no game engine, no physics.
+          </p>
+          <div class="metrics">
+            <span class="metric">Input <strong>IMU + optical flow + video</strong></span>
+            <span class="metric">Resolution <strong>128×128</strong></span>
+            <span class="metric">Actions <strong>9 discrete (WASD + diag)</strong></span>
+            <span class="metric">Loss <strong>MSE + VGG16 + KL</strong></span>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">RSSM</span>
+            <span class="tag">World Models</span>
+            <span class="tag">VGG16</span>
+            <span class="tag">GRU</span>
+            <span class="tag">VAE</span>
+            <span class="tag">pygame</span>
+            <span class="tag">Kaggle</span>
+            <span class="tag">MIT License</span>
+          </div>
+          <div class="card-links">
+            <a class="btn btn-primary" href="https://github.com/tomaszwi66/worldsim" target="_blank">⭐ GitHub</a>
+            <a class="btn btn-blue" href="https://websim.com/@TomaszW/worldmodel-data-collector" target="_blank">📱 Data Collector</a>
+          </div>
+        </div>
+      </div>
+
 
       <!-- Bio Brain -->
       <div class="card">
@@ -2355,7 +2403,7 @@
 
     <span class="social-sep">·</span>
 
-    <a class="social-link" href="mailto:tomaszwi22@gmail.com" rel="noopener">
+    <a class="social-link" href="/cdn-cgi/l/email-protection#a3d7cccec2d0d9d4ca9191e3c4cec2cacf8dc0ccce" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
         <rect x="2" y="4" width="20" height="16" rx="2"/>
         <path d="M2 7l10 7 10-7"/>
@@ -2375,7 +2423,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // smooth nav scroll
   function scrollTo(id) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2429,13 +2477,4 @@
     gallery.querySelector('.gallery-btn.next').addEventListener('click', function(e){
       e.stopPropagation(); show(idx+1); resetTimer();
     });
-    dots.forEach(function(dot, i){
-      dot.addEventListener('click', function(e){ e.stopPropagation(); show(i); resetTimer(); });
-    });
-  });
-})();
-
-
-</script>
-</body>
-</html>
+    dots.forEach(function(dot

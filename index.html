@@ -952,6 +952,28 @@
       flex-wrap: wrap;
       margin-top: 22px;
     }
+
+    .paper-thumbnail {
+      display: block;
+      width: 120px;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid rgba(0,229,160,0.2);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      transition: transform .2s, box-shadow .2s;
+      float: right;
+      margin: 6px 0 16px 20px;
+    }
+    .paper-thumbnail:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,229,160,0.2);
+    }
+    .paper-thumbnail img {
+      width: 100%;
+      display: block;
+    }
+    .research-card-inner { display: block; }
+    .research-card-content { display: block; }
   </style>
 </head>
 <body>
@@ -1027,6 +1049,11 @@
     </div>
 
     <div class="research-card">
+      <div class="research-card-inner">
+        <div class="research-card-content">
+        <a class="paper-thumbnail" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">
+          <img src="images/arxiv_paper.jpg" alt="Paper preview">
+        </a>
       <a class="arxiv-badge" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">
         arXiv:2603.19348
       </a>
@@ -1065,6 +1092,9 @@
         <a class="btn btn-primary" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">📄 Read on arXiv</a>
         <a class="btn btn-blue" href="https://arxiv.org/html/2603.19348v1" target="_blank" rel="noopener">HTML version</a>
       </div>
+        </div><!-- /research-card-content -->
+      </div><!-- /research-card-inner -->
+      <div style="clear:both;"></div>
     </div>
   </section>
 

@@ -864,6 +864,94 @@
       gap: 8px;
     }
 
+
+    /* ===== RESEARCH SECTION ===== */
+    .research-card {
+      background: linear-gradient(135deg, rgba(0,229,160,0.04), rgba(0,163,255,0.04));
+      border: 1px solid rgba(0,229,160,0.25);
+      border-radius: 8px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+    }
+    .arxiv-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .arxiv-badge:hover {
+      background: var(--accent);
+      color: #000;
+    }
+    .research-title {
+      font-family: var(--mono);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .research-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      letter-spacing: .05em;
+    }
+    .research-abstract {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 20px;
+      max-width: 820px;
+    }
+    .research-findings {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .finding-item {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .finding-item strong {
+      display: block;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+    .research-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
   </style>
 </head>
 <body>
@@ -908,7 +996,8 @@
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav>
   <div class="nav-inner">
-    <button class="nav-btn active" onclick="scrollTo('#about')">About</button>
+    <button class="nav-btn active" onclick="scrollTo('#research')">Research</button>
+    <button class="nav-btn" onclick="scrollTo('#about')">About</button>
     <button class="nav-btn" onclick="scrollTo('#production')">Production</button>
     <button class="nav-btn" onclick="scrollTo('#ai-agents')">AI Agents</button>
     <button class="nav-btn" onclick="scrollTo('#ml-research')">ML Research</button>
@@ -926,6 +1015,59 @@
 <main>
 
   <!-- ══ ABOUT ══ -->
+  <!-- ══ RESEARCH ══ -->
+  <section class="section" id="research">
+    <div class="section-header">
+      <div class="section-icon">📄</div>
+      <div class="section-meta">
+        <div class="section-tag">Preprint · arXiv · 2026</div>
+        <h2>Research Publication</h2>
+        <p class="section-desc">Transformer architecture analysis, layer importance, and efficient training.</p>
+      </div>
+    </div>
+
+    <div class="research-card">
+      <a class="arxiv-badge" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">
+        arXiv:2603.19348
+      </a>
+      <div class="research-title">Anatomical Heterogeneity in Transformer Language Models</div>
+      <div class="research-meta">Tomasz Wietrzykowski · Independent Researcher, Wrocław, Poland · March 2026</div>
+      <p class="research-abstract">
+        Current transformer models train all layers with uniform computational budgets, implicitly assuming layer homogeneity. This paper challenges that assumption through comprehensive empirical analysis of SmolLM2-135M (30 layers, 135M parameters), introducing diagnostic metrics including weight predictability (R²), layer-wise ablation degradation, post-perturbation recovery speed, and weight manipulation robustness.
+      </p>
+      <div class="research-findings">
+        <div class="finding-item">
+          <strong>Critical Core</strong>
+          Layers 8–11 form a dominant reasoning core - ablation causes up to +63,419% perplexity degradation.
+        </div>
+        <div class="finding-item">
+          <strong>Anti-Layers</strong>
+          Layers L14 and L17 have net-negative contribution - removing them <em>improves</em> model performance.
+        </div>
+        <div class="finding-item">
+          <strong>Oscillatory Pattern</strong>
+          Layer weights follow a universal oscillatory delta pattern (inter-layer correlation ≈ −0.50), yet regression-based weight generation fails catastrophically.
+        </div>
+        <div class="finding-item">
+          <strong>Growth Transformer Training</strong>
+          Proposed training paradigm allocating budget by empirical layer importance achieves 4.7× lower validation loss vs. uniform baseline, 13% faster, identical parameter count.
+        </div>
+        <div class="finding-item">
+          <strong>Recovery Speed</strong>
+          Post-perturbation recovery speed correlates with layer importance - a practical proxy for per-layer training budget requirements.
+        </div>
+        <div class="finding-item">
+          <strong>Reproducible</strong>
+          All experiments run on free Kaggle GPU (NVIDIA T4). No proprietary data or licensed resources.
+        </div>
+      </div>
+      <div class="research-links">
+        <a class="btn btn-primary" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">📄 Read on arXiv</a>
+        <a class="btn btn-blue" href="https://arxiv.org/html/2603.19348v1" target="_blank" rel="noopener">HTML version</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="about">
     <div class="section-header">
       <div class="section-icon">👤</div>
@@ -2404,7 +2546,7 @@
   // highlight nav on scroll
   const sections = document.querySelectorAll('section[id]');
   const navBtns  = document.querySelectorAll('.nav-btn');
-  const sectionIds = ['#about','#production','#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
+  const sectionIds = ['#research','#about','#production','#ai-agents','#ml-research','#spatial-ar','#simulations','#games-interactive','#education','#web-tools','#misc'];
 
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {

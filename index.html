@@ -952,6 +952,38 @@
       flex-wrap: wrap;
       margin-top: 22px;
     }
+
+    .paper-thumbnail {
+      display: block;
+      margin-bottom: 22px;
+      width: 200px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(0,229,160,0.2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      transition: transform .2s, box-shadow .2s;
+      flex-shrink: 0;
+    }
+    .paper-thumbnail:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,229,160,0.15);
+    }
+    .paper-thumbnail img {
+      width: 100%;
+      display: block;
+    }
+    .research-card-inner {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+    .research-card-content {
+      flex: 1;
+    }
+    @media (max-width: 600px) {
+      .research-card-inner { flex-direction: column; }
+      .paper-thumbnail { width: 100%; max-width: 280px; }
+    }
   </style>
 </head>
 <body>
@@ -1027,6 +1059,11 @@
     </div>
 
     <div class="research-card">
+      <div class="research-card-inner">
+        <a class="paper-thumbnail" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">
+          <img src="images/arxiv_paper.jpg" alt="Paper thumbnail - Anatomical Heterogeneity in Transformer Language Models">
+        </a>
+        <div class="research-card-content">
       <a class="arxiv-badge" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">
         arXiv:2603.19348
       </a>
@@ -1065,6 +1102,8 @@
         <a class="btn btn-primary" href="https://arxiv.org/abs/2603.19348" target="_blank" rel="noopener">📄 Read on arXiv</a>
         <a class="btn btn-blue" href="https://arxiv.org/html/2603.19348v1" target="_blank" rel="noopener">HTML version</a>
       </div>
+        </div><!-- /research-card-content -->
+      </div><!-- /research-card-inner -->
     </div>
   </section>
 
